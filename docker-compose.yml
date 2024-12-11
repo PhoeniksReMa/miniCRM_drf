@@ -1,0 +1,44 @@
+services:
+  web:
+    build:
+      context: django_app
+    container_name: django_app
+    command: gunicorn config.wsgi:application --reload
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+    - MYSQL_DATABASE=mysql
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=root
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_PORT=3306
+    - MYSQL_HOST=localhost
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+  db:
+    image: mariadb:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-mysql
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_TCP_PORT: ${MYSQL_PORT}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+
+volumes:
+  db_data:
+
+networks:
+  app_network:
+    driver: bridge
