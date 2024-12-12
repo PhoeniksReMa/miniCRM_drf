@@ -25,6 +25,8 @@ from rest_framework import routers
 
 from rest_framework import permissions
 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -59,3 +61,5 @@ urlpatterns = [
     # path('api/v1/contactlist/', ContactViewSet.as_view({'get': 'list'})),
     # path('api/v1/contactlist/<int:pk>/', ContactViewSet.as_view({'put': 'update'})),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

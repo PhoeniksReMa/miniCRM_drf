@@ -147,15 +147,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 if DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, './static_data/static/')
-    STATIC_DIR = os.path.join(BASE_DIR, './static_data/static')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_DIR = os.path.join(BASE_DIR, 'staticfiles')
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, './static_data/static/')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static_data/static/')
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     )
-
 
 
 # Default primary key field type

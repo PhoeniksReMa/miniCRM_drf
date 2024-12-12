@@ -8,8 +8,8 @@ COPY requirements.txt requirements.txt
 
 RUN  pip install --upgrade pip \
      && pip install -r requirements.txt \
-     && pip install gunicorn \
-     && mkdir -p /opt/app/static
+     && pip install gunicorn
+#     && mkdir -p /opt/app/static
 
 COPY . .
 
