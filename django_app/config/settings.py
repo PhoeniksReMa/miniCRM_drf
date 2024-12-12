@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-7fng-llkxd&q3w$cf&-j(a)#@gm^mgd5q$i7n5-hqsqh0-*j9z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': config('MYSQL_DATABASE', default='mysql'),
         'USER': config('MYSQL_USER', default='root'),
         'PASSWORD': config('MYSQL_PASSWORD', default='root'),
-        'HOST': config('MYSQL_HOST', default='localhost'),
+        'HOST': config('MYSQL_HOST', default='mysql'),
         'PORT': '3306',
     }
 }
@@ -144,13 +144,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
-STATIC_URL = 'static/'
+if DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, './static_data/static/')
+    STATIC_DIR = os.path.join(BASE_DIR, './static_data/static')
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, './static_data/static/')
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    )
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
